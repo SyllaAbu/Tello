@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block header %}
+    {% endblock %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Tempusdominus CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+{% block content %}
+{% endblock %}
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9@zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>-->
+
+<!-- Autocomplete -->
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+$(function() {
+	$("document").ready(function() {
+		// The tags we will be looking for
+		var categoryTags = {{ city|safe }};
+
+		// State variable to keep track of which category we are in
+		tagState = categoryTags;
+
+		// Helper functions
+		function split(val) {
+			return val.split( / \s*/ );
+		}
+
+		function extractLast(term) {
+			return split(term).pop();
+		}
+
+
+		$("#exampleFormControlTextarea1")
+
+		// Create the autocomplete box
+		.autocomplete({
+			minLength : 0,
+			autoFocus : true,
+            source : function(request, response) {
+                // Use only the last entry from the textarea (exclude previous matches)
+                lastEntry = extractLast(request.term);
+
+				var filteredArray = $.map(tagState, function(item) {
+					if (item.indexOf(lastEntry) === 0) {
+						return item;
+					} else {
+						return null;
+					}
+				});
+
+				// delegate back to autocomplete, but extract the last term
+				response($.ui.autocomplete.filter(filteredArray, lastEntry));
+			},
+			focus : function() {
+				// prevent value inserted on focus
+				return false;
+			},
+			select : function(event, ui) {
+				var terms = split(this.value);
+				// remove the current input
+				terms.pop();
+				// add the selected item
+				terms.push(ui.item.value);
+				// add placeholder to get the comma-and-space at the end
+				terms.push("");
+				this.value = terms.join(" ");
+				return false;
+			}
+		}).on("keydown", function(event) {
+			// don't navigate away from the field on tab when selecting an item
+			if (event.keyCode === $.ui.keyCode.TAB /** && $(this).data("ui-autocomplete").menu.active **/) {
+				event.preventDefault();
+				return;
+			}
+
+			// Code to position and move the selection box as the user types
+			var newY = $(this).textareaHelper('caretPos').top + (parseInt($(this).css('font-size'), 10) * 1.5);
+			var newX = $(this).textareaHelper('caretPos').left;
+			var posString = "left+" + newX + "px top+" + newY + "px";
+			$(this).autocomplete("option", "position", {
+				my : "left top",
+				at : posString
+			});
+		});
+	});
+});
+
+</script>
+
+</body>
+</html>

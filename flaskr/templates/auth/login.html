@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+    <form class="form-signin" method="post" action="">
+        <link rel='stylesheet' type='text/css' href='signin.css' />
+        <h1 class="h3 mb-3 font-weight-normal">Accedi</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Accedi</button>
+
+    </form>
+{% endblock %}

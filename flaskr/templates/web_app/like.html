@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Instagram Bot - Follow</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+
+<!-- Custom styles for this template -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Follow</div>
+        <div class="list-group list-group-flush">
+            <a href="{{prev}}" class="list-group-item list-group-item-action bg-light">
+                <button type="button" class="btn btn-success">Indietro</button>
+            </a>
+            <a href="http://80.211.148.194/{{username}}/like?page=2"
+               class="list-group-item list-group-item-action bg-light">
+                <button type="button" class="btn btn-success">Post mi-piaciuti</button>
+            </a>
+            <!--<a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>-->
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle">Opzioni</button>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div style="color:white;" class="container-fluid">
+            <!--<h1 class="mt-4">Simple Sidebar</h1>
+            <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on
+                larger screens. When toggled using the button below, the menu will change.</p>
+            <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is
+                optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which
+                will toggle the menu when clicked.</p>-->
+            {%if page != '2'%}
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="bootstrap-select-wrapper">
+                        <h5><label>Luogo o Hashtag</label></h5>
+                        <select class="form-control" name="section">
+                            <option>Hashtag</option>
+                            <option>Luogo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5><label for="exampleFormControlTextarea1">Hashtag o luoghi</label></h5>
+                    <textarea name="hashtags_or_locations"
+                              placeholder="Inserisci gli hashtag se hai scelto hashtag o nomi di luogi se hai scelto luogo, in entrambi i casi separati da spazio"
+                              class="form-control" id="exampleFormControlTextarea1" rows=5></textarea>
+                </div>
+                <div class="form-group">
+                    <h5><label for="inputNumber" class="input-number-label">Numero post minimo</label></h5>
+                    <span class="input-number">
+                            <input type="number" id="inputNumber" name="post_number" value="10">
+                          </span>
+                </div>
+                <div class="form-group">
+                    <h5><label for="inputNumber2" class="input-number-label">Numero follower minimo</label></h5>
+                    <span class="input-number">
+                            <input type="number" id="inputNumber2" name="follower_number" value="300">
+                          </span>
+                </div>
+                <div class="form-group">
+                    <h5><label for="inputNumber3" class="input-number-label">Numero seguiti minimo</label></h5>
+                    <span class="input-number">
+                            <input type="number" id="inputNumber3" name="following_number" value="50">
+                          </span>
+                </div>
+                <div class="form-group">
+                    <h5><label for="exampleFormControlTextarea12">Parole nella bio</label></h5>
+                    <textarea name="bio" placeholder="Inserisci parole da cercare nella bio"
+                              class="form-control" id="exampleFormControlTextarea12" rows=5></textarea>
+                </div>
+                <div class="form-group">
+                    <h5><label for="exampleFormControlTextarea13">Parole nel nome utente</label></h5>
+                    <textarea name="in_username" placeholder="Inserisci parole da cercare nel nome utente"
+                              class="form-control" id="exampleFormControlTextarea13" rows=5></textarea>
+                </div>
+                <div class="form-group">
+                    <h5><label for="inputNumber2" class="input-number-label">Numero profili da cercare</label></h5>
+                    <span class="input-number">
+                            <input type="number" id="inputNumber4" name="profiles_number" value="10">
+                          </span>
+                </div>
+                <button type="submit" class="btn btn-primary">Inizia a cercare</button>
+            </form>
+            {% else %}
+            <table style="background-color: white" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">link post</th>
+                    <th scope="col">data e ora like</th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td><a href="{{user['liked_post']}}">{{user['liked_post']}}</a></td>
+                    <td>{{user['timestamp'] | replace(" "," alle ")}}</td>
+                </tr>
+                {% endfor %}
+                </thead>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+<!-- /#wrapper -->
+
+<!-- Bootstrap core JavaScript -->
+<script src="../static/vendor/jquery/jquery.min.js"></script>
+<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+<!-- Datetime Script Script -->
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker({
+                    locale: 'ru'
+                });
+            });
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock %}

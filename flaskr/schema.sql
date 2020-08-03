@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS admins;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE admins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE insta_users (
+  user_id VARCHAR(30) PRIMARY KEY,
+  username INTEGER NOT NULL,
+  password TEXT NOT NULL
+);
